@@ -1,5 +1,8 @@
 # Docker Secrets
 
+[![Build Status](https://travis-ci.org/carsdotcom/docker-secrets-java.svg?branch=master)](https://travis-ci.org/carsdotcom/docker-secrets-java)
+[![Apache 2.0](https://img.shields.io/badge/license-apache--2.0-lightgrey.svg)](https://www.apache.org/licenses/LICENSE-2.0)   
+
 A simple library to load [Docker secrets](https://docs.docker.com/engine/swarm/secrets/) in a swarm cluster as a map.
 
 ## Download
