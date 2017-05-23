@@ -17,7 +17,7 @@ apply plugin: 'nebula.nebula-release'
 apply plugin: 'signing'
 apply plugin: 'io.codearte.nexus-staging'
 
-group = 'com.cars.framework'
+group = 'com.cars'
 archivesBaseName = 'docker-secrets'
 
 repositories {
@@ -97,8 +97,19 @@ uploadArchives {
 }
 
 nexusStaging {
+  packageGroup = "com.cars"
 }
 
-
 task wrapper(type: Wrapper) { gradleVersion = '2.12' }
+
+task osshrRelease << { println "Archives uploaded and released!" }
+
+osshrRelease.dependsOn uploadArchives
+osshrRelease.dependsOn closeRepository
+osshrRelease.dependsOn releaseRepository
+closeRepository.mustRunAfter uploadArchives
+releaseRepository.mustRunAfter closeRepository
+
+tasks.release.finalizedBy tasks.osshrRelease
+
 
