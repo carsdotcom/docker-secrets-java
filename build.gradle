@@ -1,11 +1,13 @@
 buildscript {
     repositories {
+        mavenCentral()
         maven { url { 'https://plugins.gradle.org/m2/' }}
     }
     dependencies {
         classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.0.0"
         classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:1.2"
         classpath 'com.netflix.nebula:nebula-release-plugin:4.2.0'
+        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.8.0"
     }
 }
 
@@ -13,6 +15,7 @@ apply plugin: 'maven'
 apply plugin: 'java'
 apply plugin: 'nebula.nebula-release'
 apply plugin: 'signing'
+apply plugin: 'io.codearte.nexus-staging'
 
 group = 'com.cars.framework'
 archivesBaseName = 'docker-secrets'
@@ -91,6 +94,9 @@ uploadArchives {
       }
     }
   }
+}
+
+nexusStaging {
 }
 
 
