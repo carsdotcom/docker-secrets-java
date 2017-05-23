@@ -12,16 +12,15 @@ buildscript {
 apply plugin: 'maven'
 apply plugin: 'java'
 apply plugin: 'nebula.nebula-release'
+apply plugin: 'signing'
 
 group = 'com.cars.framework'
-archiveBaseName = 'docker-secrets'
-
-jar {
-	baseName = 'docker-secrets'
-}
+archivesBaseName = 'docker-secrets'
 
 repositories {
+  jcenter()
 }
+
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
@@ -70,9 +69,9 @@ uploadArchives {
         url ''
 
         scm {
-          connection 'scm:svn:http://foo.googlecode.com/svn/trunk/'
-          developerConnection 'scm:svn:https://foo.googlecode.com/svn/trunk/'
-          url 'http://foo.googlecode.com/svn/trunk/'
+          connection 'scm:git:https://github.com/carsdotcom/docker-secrets-java.git'
+          developerConnection 'scm:git:https://github.com/carsdotcom/docker-secrets-java.git'
+          url 'https://github.com/carsdotcom/docker-secrets-java'
         }
 
         licenses {
