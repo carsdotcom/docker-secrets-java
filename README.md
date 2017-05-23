@@ -155,3 +155,7 @@ $ ./gradlew clean build
 ```bash
 $ ./gradlew clean test
 ```
+
+## License
+
+Apache 2.0
