@@ -1,0 +1,99 @@
+buildscript {
+    repositories {
+        maven { url { 'https://plugins.gradle.org/m2/' }}
+    }
+    dependencies {
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.0.0"
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:1.2"
+        classpath 'com.netflix.nebula:nebula-release-plugin:4.2.0'
+    }
+}
+
+apply plugin: 'maven'
+apply plugin: 'java'
+apply plugin: 'nebula.nebula-release'
+
+group = 'com.cars.framework'
+archiveBaseName = 'docker-secrets'
+
+jar {
+	baseName = 'docker-secrets'
+}
+
+repositories {
+}
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+dependencies {
+	compile 'org.slf4j:slf4j-api:1.7.14'
+	testCompile 'junit:junit:4.12'
+}
+
+task javadocJar(type: Jar) {
+  classifier = 'javadoc'
+  from javadoc
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+	classifier = 'sources'
+	from sourceSets.main.allSource
+}
+
+artifacts {
+  archives javadocJar, sourcesJar
+}
+
+signing {
+  sign configurations.archives
+}
+
+uploadArchives {
+  repositories {
+    mavenDeployer {
+      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+      repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+        authentication(userName: ossrhUsername, password: ossrhPassword)
+      }
+
+      snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+        authentication(userName: ossrhUsername, password: ossrhPassword)
+      }
+
+      pom.project {
+        name 'Docker Secrets'
+        packaging 'jar'
+        // optionally artifactId can be defined here
+        description 'A simple library to load Docker secrets in a swarm cluster as a map..'
+        url ''
+
+        scm {
+          connection 'scm:svn:http://foo.googlecode.com/svn/trunk/'
+          developerConnection 'scm:svn:https://foo.googlecode.com/svn/trunk/'
+          url 'http://foo.googlecode.com/svn/trunk/'
+        }
+
+        licenses {
+          license {
+            name 'The Apache License, Version 2.0'
+            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+          }
+        }
+
+        developers {
+          developer {
+            id 'cars-user'
+            name 'Deep Mistry'
+            email 'dmistry@cars.com'
+          }
+        }
+      }
+    }
+  }
+}
+
+
+task wrapper(type: Wrapper) { gradleVersion = '2.12' }
+
