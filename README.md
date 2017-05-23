@@ -2,6 +2,31 @@
 
 A simple library to load [Docker secrets](https://docs.docker.com/engine/swarm/secrets/) in a swarm cluster as a map.
 
+## Download
+
+### Gradle
+
+```groovy
+
+repositories {
+  jcenter()
+}
+
+dependencies {
+  compile 'com.cars:docker-secrets:0.2.0'
+}
+```
+
+### Maven
+
+```xml
+<dependency>
+  <groupId>com.cars</groupId>
+  <artifactId>docker-secrets</artifactId>
+  <version>0.2.0</version>
+</dependency>
+```
+
 ## Usage
 
 Docker secrets are availble to a container under /run/secrets/   
